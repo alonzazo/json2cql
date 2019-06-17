@@ -11,6 +11,12 @@ public class Json2CqlConverter {
 
     }
 
+    public static String convertJSON(String tableName, JSONObject json) {
+
+        return  "INSERT INTO " + tableName + " (" + keysSeparatedByComma(json.keySet()) + ") VALUES (" + valuesSeparatedByComma(json.values()) + ");";
+
+    }
+
     private static String keysSeparatedByComma(Set set){
         String result = "";
         for (Object key: set){

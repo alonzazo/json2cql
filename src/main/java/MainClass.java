@@ -2,16 +2,29 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Scanner;
+
+import static java.lang.System.exit;
 
 public class MainClass {
 
     public static void main(String[] args){
 
         try {
+            String tablename;
+            String path;
+            if (args.length == 1){
+                tablename = "Reviews";
+                path = args[0];
+            }
+            if (args.length == 2){
+                tablename = args[0];
+                path = args[1];
+            }
+            else
+                throw new Exception();
 
-            InputStream inputStream = new FileInputStream(args[0]);
+            InputStream inputStream = new FileInputStream(path);
             Scanner scanner = new Scanner(inputStream);
 
             File file = new File("out.sql");
@@ -26,7 +39,7 @@ public class MainClass {
                 JSONParser jsonParser = new JSONParser();
                 JSONObject row = (JSONObject) jsonParser.parse(line);
 
-                String cqlLine = Json2CqlConverter.convertJSON(row);
+                String cqlLine = Json2CqlConverter.convertJSON(tablename, row);
 
                 fileWriter.append(cqlLine + "\n");
                 fileWriter.flush();
