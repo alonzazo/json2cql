@@ -24,6 +24,8 @@ public class Json2CqlConverter {
             result += keyString + ",";
         }
 
+        result += "year,";
+
         return result.substring(0,result.length()-1);
     }
 
@@ -41,6 +43,9 @@ public class Json2CqlConverter {
 
             if (!isNumeric(valueString))
                 valueString = "\"" + valueString + "\"";
+
+            if (isWeirdDate(value.toString()))
+                valueString += ", " + valueString.substring(1,5);
 
             result += valueString + ",";
         }
